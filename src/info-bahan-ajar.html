@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Informasi Bahan Ajar - Pemesanan Bahan Ajar UT</title>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" />
+		<link
+			rel="stylesheet"
+			href="../assets/styles/style.css" />
+	</head>
+	<body class="dashboard-bg">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+			<div class="container-fluid">
+				<a
+					href="dashboard.html"
+					class="btn text-white btn-md position-sticky">
+					<i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="collapse navbar-collapse"
+					id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<span class="nav-link disabled text-light">
+								<i class="bi bi-person-circle"></i>
+								<span id="userName">User</span>
+							</span>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								id="logoutBtn">
+								<i class="bi bi-box-arrow-right"></i> Logout
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="page-wrapper">
+			<div class="page-container">
+				<div class="page-card">
+					<div class="page-header">
+						<h1><i class="bi bi-book"></i> Informasi Bahan Ajar</h1>
+						<p>
+							Daftar lengkap bahan ajar yang tersedia untuk pemesanan di
+							UT-Daerah
+						</p>
+					</div>
+					<div class="card-body">
+						<div class="row mb-4">
+							<div class="col-md-6">
+								<div class="input-group">
+									<input
+										type="text"
+										class="form-control"
+										id="searchInput"
+										placeholder="Cari bahan ajar..."
+										autocomplete="off" />
+									<button
+										class="btn btn-primary"
+										type="button">
+										<i class="bi bi-search"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-12">
+								<div class="card shadow-sm">
+									<div class="card-body p-0">
+										<div class="table-responsive">
+											<table class="table table-hover mb-0">
+												<thead class="table-light">
+													<tr>
+														<th width="8%">No</th>
+														<th width="12%">Kode Barang</th>
+														<th width="35%">Nama Bahan Ajar</th>
+														<th width="15%">Lokasi</th>
+														<th width="15%">Stok</th>
+													</tr>
+												</thead>
+												<tbody id="materiTable"></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mt-5">
+							<div class="col-12">
+								<h3 class="fw-bold mb-1">
+									<i class="bi bi-grid-3x2"></i> Tampilan Kartu
+								</h3>
+							</div>
+							<div
+								id="materiGrid"
+								class="row g-4"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+		<script src="../utils/data.js"></script>
+		<script src="../utils/script.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				initializeMateriPage();
+			});
+
+			function initializeMateriPage() {
+				// Check login
+				const userEmail = localStorage.getItem('userEmail');
+				if (!userEmail) {
+					window.location.href = 'index.html';
+					return;
+				}
+
+				document.getElementById('userName').textContent =
+					userEmail.split('@')[0];
+
+				displayMaterials();
+				displayMateriGrid();
+
+				document
+					.getElementById('logoutBtn')
+					.addEventListener('click', function (e) {
+						e.preventDefault();
+						localStorage.removeItem('userEmail');
+						window.location.href = 'index.html';
+					});
+
+				document
+					.getElementById('searchInput')
+					.addEventListener('keyup', filterMaterials);
+			}
+
+			function displayMaterials() {
+				const materiTable = document.getElementById('materiTable');
+				materiTable.innerHTML = '';
+
+				dataBahanAjar.forEach((item, index) => {
+					const row = `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><span class="badge bg-primary">${item.kodeBarang}</span></td>
+                        <td>
+                            <strong>${item.namaBarang}</strong><br>
+                            <small class="text-muted">${item.jenisBarang} - Edisi ${item.edisi}</small>
+                        </td>
+                        <td>${item.kodeLokasi}</td>
+                        <td class="text-center">
+                            <span class="badge bg-secondary">${item.stok} unit</span>
+                        </td>
+                    </tr>
+                `;
+					materiTable.innerHTML += row;
+				});
+			}
+
+			function displayMateriGrid() {
+				const materiGrid = document.getElementById('materiGrid');
+				materiGrid.innerHTML = '';
+
+				dataBahanAjar.forEach((item) => {
+					const stokStatus = item.stok > 0 ? 'Tersedia' : 'Habis';
+					const card = `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm hover-shadow">
+                            <img src="../assets/${item.cover}" class="card-img-top" alt="${item.namaBarang}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-primary">${item.kodeBarang}</span>
+                                    <span class="badge bg-secondary">${stokStatus}</span>
+                                </div>
+                                <h5 class="card-title">${item.namaBarang}</h5>
+                                <p class="text-muted small mb-2">
+                                    <i class="bi bi-tag"></i> ${item.jenisBarang} - Edisi ${item.edisi}
+                                </p>
+                                <p class="text-muted small">
+                                    <i class="bi bi-geo-alt"></i> ${item.kodeLokasi}
+                                </p>
+                                <hr>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted small">Stok:</span>
+                                    <span class="badge bg-secondary">${item.stok} unit</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-white border-top">
+                                <button class="btn btn-sm btn-primary w-100">
+                                    <i class="bi bi-cart-plus"></i> Pesan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+					materiGrid.innerHTML += card;
+				});
+			}
+
+			function filterMaterials() {
+				const searchValue = document
+					.getElementById('searchInput')
+					.value.toLowerCase();
+				const rows = document
+					.getElementById('materiTable')
+					.querySelectorAll('tr');
+
+				rows.forEach((row) => {
+					const text = row.textContent.toLowerCase();
+					row.style.display = text.includes(searchValue) ? '' : 'none';
+				});
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Dashboard - Pemesanan Bahan Ajar UT</title>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" />
+		<script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+		<link
+			rel="stylesheet"
+			href="../assets/styles/style.css" />
+	</head>
+	<body class="dashboard-bg">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+			<div class="container-fluid">
+				<a
+					class="navbar-brand fw-bold"
+					href="dashboard.html">
+					<i class="bi bi-book-half"></i> Dashboard Aplikasi SITTA
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="collapse navbar-collapse"
+					id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<span class="nav-link disabled text-light">
+								<i class="bi bi-person-circle"></i>
+								<span id="userName">User</span>
+							</span>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								id="logoutBtn">
+								<i class="bi bi-box-arrow-right"></i> Logout
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="page-wrapper">
+			<div class="page-container">
+				<div class="page-card">
+					<div class="page-header">
+						<h1><i class="bi bi-columns-gap me-2"></i> Dashboard Aplikasi SITTA</h1>
+						<h5 id="greeting" class="mt-3 mb-0">
+							
+						</h5>
+					</div>
+					<div class="card-body">
+						<div
+							class="tab-content"
+							id="dashboardTabsContent">
+							<div
+								class="tab-pane fade show active"
+								id="home"
+								role="tabpanel"
+								aria-labelledby="home-tab">
+								<div class="row g-2">
+									<div class="col-md-6 col-lg-4">
+										<div class="card menu-card shadow-sm hover-shadow h-100">
+											<div class="card-body text-center p-3">
+												<i class="bi bi-book icon-menu text-secondary"></i>
+												<h5 class="card-title mt-2">Informasi Bahan Ajar</h5>
+												<p class="card-text text-muted small">
+													Lihat daftar lengkap bahan ajar yang tersedia
+												</p>
+												<a
+													href="info-bahan-ajar.html"
+													class="btn btn-primary btn-sm">
+													<i class="bi bi-arrow-right"></i> Lihat
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-lg-4">
+										<div class="card menu-card shadow-sm hover-shadow h-100">
+											<div class="card-body text-center p-3">
+												<i class="bi bi-geo-alt icon-menu text-secondary"></i>
+												<h5 class="card-title mt-2">Tracking Pengiriman</h5>
+												<p class="card-text text-muted small">
+													Lacak status pengiriman bahan ajar anda
+												</p>
+												<a
+													href="tracking.html"
+													class="btn btn-primary btn-sm">
+													<i class="bi bi-arrow-right"></i> Tracking
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-lg-4">
+										<div class="card menu-card shadow-sm hover-shadow h-100">
+											<div class="card-body text-center">
+												<i class="bi bi-graph-up icon-menu text-secondary"></i>
+												<h5 class="card-title mt-3">Monitoring Progress</h5>
+												<p class="card-text text-muted">
+													Pantau progress pengiriman bahan ajar
+												</p>
+												<a
+													href="#"
+													class="btn btn-primary btn-sm"
+													onclick="showMonitoringReport()">
+													<i class="bi bi-arrow-right"></i> Monitor
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-lg-4">
+										<div class="card menu-card shadow-sm hover-shadow h-100">
+											<div class="card-body text-center">
+												<i
+													class="bi bi-file-earmark-text icon-menu text-secondary"></i>
+												<h5 class="card-title mt-3">Rekap Bahan Ajar</h5>
+												<p class="card-text text-muted">
+													Lihat rekap daftar pesanan bahan ajar
+												</p>
+												<a
+													href="#"
+													class="btn btn-primary btn-sm"
+													onclick="showRekapReport()">
+													<i class="bi bi-arrow-right"></i> Laporan
+												</a>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-md-6 col-lg-4">
+										<div class="card menu-card shadow-sm hover-shadow h-100">
+											<div class="card-body text-center">
+												<i
+													class="bi bi-clock-history icon-menu text-secondary"></i>
+												<h5 class="card-title mt-3">Histori Transaksi</h5>
+												<p class="card-text text-muted">
+													Lihat riwayat transaksi bahan ajar anda
+												</p>
+												<a
+													href="#"
+													class="btn btn-primary btn-sm"
+													onclick="showHistoryModal()">
+													<i class="bi bi-arrow-right"></i> Riwayat
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Info Bahan Ajar Tab -->
+							<div
+								class="tab-pane fade"
+								id="info"
+								role="tabpanel"
+								aria-labelledby="info-tab">
+								<div class="alert alert-info mt-3">
+									<i class="bi bi-info-circle"></i>
+									<strong>Informasi Bahan Ajar</strong><br />
+									<p class="mb-0">
+										Menampilkan semua bahan ajar yang tersedia untuk pemesanan.
+									</p>
+								</div>
+								<div class="text-center mt-5">
+									<a
+										href="info-bahan-ajar.html"
+										class="btn btn-primary btn-lg">
+										<i class="bi bi-arrow-right"></i> Buka Halaman Lengkap
+									</a>
+								</div>
+							</div>
+
+							<!-- Tracking Tab -->
+							<div
+								class="tab-pane fade"
+								id="tracking"
+								role="tabpanel"
+								aria-labelledby="tracking-tab">
+								<div class="alert alert-info mt-3">
+									<i class="bi bi-info-circle"></i>
+									<strong>Tracking Pengiriman</strong><br />
+									<p class="mb-0">
+										Lacak status pengiriman bahan ajar anda menggunakan nomor
+										DO.
+									</p>
+								</div>
+								<div class="text-center mt-5">
+									<a
+										href="tracking.html"
+										class="btn btn-primary btn-lg">
+										<i class="bi bi-arrow-right"></i> Buka Halaman Tracking
+									</a>
+								</div>
+							</div>
+
+							<!-- History Tab -->
+							<div
+								class="tab-pane fade"
+								id="history"
+								role="tabpanel"
+								aria-labelledby="history-tab">
+								<div class="alert alert-info mt-3">
+									<i class="bi bi-info-circle"></i>
+									<strong>History Transaksi</strong><br />
+									<p class="mb-0">
+										Lihat riwayat lengkap transaksi bahan ajar anda.
+									</p>
+								</div>
+								<div class="text-center mt-5">
+									<button
+										class="btn btn-primary btn-lg"
+										onclick="showHistoryModal()">
+										<i class="bi bi-arrow-right"></i> Lihat History
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="monitoringModal"
+			tabindex="-1">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-warning bg-opacity-10">
+						<h5 class="modal-title">Monitoring Progress DO Bahan Ajar</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<div id="monitoringContent"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="rekapModal"
+			tabindex="-1">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-danger bg-opacity-10">
+						<h5 class="modal-title">Rekap Bahan Ajar</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<div id="rekapContent"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="historyModal"
+			tabindex="-1">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-info bg-opacity-10">
+						<h5 class="modal-title">Histori Transaksi Bahan Ajar</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<div id="historyContent"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+		<script src="../utils/data.js"></script>
+		<script src="../utils/script.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				initializeDashboard();
+				setupGreeting();
+			});
+
+			function initializeDashboard() {
+				const userEmail = localStorage.getItem('userEmail');
+				if (!userEmail) {
+					window.location.href = 'index.html';
+					return;
+				}
+
+				document.getElementById('userName').textContent =
+					userEmail.split('@')[0];
+
+				document
+					.getElementById('logoutBtn')
+					.addEventListener('click', function (e) {
+						e.preventDefault();
+						localStorage.removeItem('userEmail');
+						window.location.href = 'index.html';
+					});
+			}
+
+			function setupGreeting() {
+				const hour = new Date().getHours();
+				let greeting = '';
+
+				if (hour < 12) {
+					greeting = 'Selamat Pagi!';
+				} else if (hour < 15) {
+					greeting = 'Selamat Siang!';
+				} else if (hour < 19) {
+					greeting = 'Selamat Sore!';
+				} else {
+					greeting = 'Selamat Malam!';
+				}
+
+				document.getElementById('greeting').textContent = greeting;
+			}
+
+			function showMonitoringReport() {
+				const modal = new bootstrap.Modal(
+					document.getElementById('monitoringModal'),
+				);
+				let html = '<table class="table table-striped">';
+				html +=
+					'<thead><tr><th>Nomor DO</th><th>Nama Mahasiswa</th><th>Progress</th><th>Status</th></tr></thead><tbody>';
+
+				for (let doNo in dataTracking) {
+					const data = dataTracking[doNo];
+					const statusMap = {
+						'Dalam Perjalanan': 'warning',
+						'Dikirim': 'success',
+						'Pending': 'secondary',
+						'Terkirim': 'success'
+					};
+					const statusColor = statusMap[data.status] || 'secondary';
+					const progressPercent = Math.min(100, (data.perjalanan.length / 6) * 100);
+					html += `<tr>
+                    <td>${doNo}</td>
+                    <td>${data.nama}</td>
+                    <td><div class="progress" style="height: 20px;">
+                        <div class="progress-bar bg-primary" style="width: ${progressPercent}%">${Math.round(progressPercent)}%</div>
+                    </div></td>
+                    <td><span class="badge bg-${statusColor}">${data.status}</span></td>
+                </tr>`;
+				}
+
+				html += '</tbody></table>';
+				document.getElementById('monitoringContent').innerHTML = html;
+				modal.show();
+			}
+
+			function showRekapReport() {
+				const modal = new bootstrap.Modal(
+					document.getElementById('rekapModal'),
+				);
+				let html = '<table class="table table-hover">';
+				html +=
+					'<thead><tr><th>Kode</th><th>Nama Bahan Ajar</th><th>Jenis</th><th>Stok</th></tr></thead><tbody>';
+
+				dataBahanAjar.forEach((item) => {
+					html += `<tr>
+                    <td><strong>${item.kodeBarang}</strong></td>
+                    <td>${item.namaBarang}</td>
+                    <td>${item.jenisBarang}</td>
+                    <td><span class="badge bg-secondary">${item.stok}</span></td>
+                </tr>`;
+				});
+
+				html += '</tbody></table>';
+				document.getElementById('rekapContent').innerHTML = html;
+				modal.show();
+			}
+
+			function showHistoryModal() {
+				const modal = new bootstrap.Modal(
+					document.getElementById('historyModal'),
+				);
+				let html = '<table class="table table-hover">';
+				html +=
+					'<thead><tr><th>No Pesanan</th><th>Nama Mahasiswa</th><th>Status</th><th>Total</th></tr></thead><tbody>';
+
+				for (let doNo in dataTracking) {
+					const item = dataTracking[doNo];
+					html += `<tr>
+                    <td><strong>${doNo}</strong></td>
+                    <td>${item.nama}</td>
+                    <td><span class="badge bg-secondary">${item.status}</span></td>
+                    <td>${item.total}</td>
+                </tr>`;
+				}
+
+				html += '</tbody></table>';
+				document.getElementById('historyContent').innerHTML = html;
+				modal.show();
+			}
+		</script>
+	</body>
+</html>

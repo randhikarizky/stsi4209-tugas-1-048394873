@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Tracking Pengiriman - Pemesanan Bahan Ajar UT</title>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" />
+		<link
+			rel="stylesheet"
+			href="../assets/styles/style.css" />
+	</head>
+	<body class="dashboard-bg">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+			<div class="container-fluid">
+				<a
+					href="dashboard.html"
+					class="btn text-white btn-md position-sticky">
+					<i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="collapse navbar-collapse"
+					id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item">
+							<span class="nav-link disabled text-light">
+								<i class="bi bi-person-circle"></i>
+								<span id="userName">User</span>
+							</span>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link"
+								href="#"
+								id="logoutBtn">
+								<i class="bi bi-box-arrow-right"></i> Logout
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="page-wrapper">
+			<div class="page-container">
+				<div class="page-card">
+					<div class="page-header">
+						<h1><i class="bi bi-geo-alt"></i> Tracking Pengiriman</h1>
+						<p>
+							Lacak status pengiriman bahan ajar anda dengan nomor Delivery
+							Order (DO)
+						</p>
+					</div>
+					<div class="card-body">
+						<div class="row mb-5">
+							<div class="col-md-12">
+								<div class="card shadow-sm">
+									<div class="card-body p-2">
+										<h5 class="card-title mb-2">
+											<i class="bi bi-search"></i> Cari Status Pengiriman
+										</h5>
+										<div class="input-group">
+											<input
+												type="text"
+												class="form-control"
+												id="doNumber"
+												placeholder="Masukkan nomor Delivery Order (contoh: 2023001234)"
+												autocomplete="off" />
+											<button
+												class="btn btn-primary"
+												type="button"
+												id="searchBtn">
+												<i class="bi bi-search"></i> Cari
+											</button>
+										</div>
+										<small class="text-muted mt-2 d-block">
+											<i class="bi bi-info-circle"></i> Contoh DO yang tersedia:
+											2023001234, 2023005678
+										</small>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div
+							id="resultsContainer"
+							class="row"
+							style="display: none">
+							<div class="col-md-8 mx-auto">
+								<div class="card shadow-sm mb-4">
+									<div class="card-header bg-light border-bottom">
+										<h5 class="mb-0 text-secondary fw-bold">
+											<i class="bi bi-person"></i> Informasi Mahasiswa
+										</h5>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-6">
+												<p class="mb-3">
+													<strong>Nama:</strong><br />
+													<span
+														id="namaMahasiswa"
+														class="fs-5"
+														>-</span
+													>
+												</p>
+											</div>
+											<div class="col-md-6">
+												<p class="mb-3">
+													<strong>NIM:</strong><br />
+													<span
+														id="nimMahasiswa"
+														class="fs-5"
+														>-</span
+													>
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="card shadow-sm mb-4">
+									<div class="card-header bg-light border-bottom">
+										<h5 class="mb-0 text-secondary fw-bold">
+											<i class="bi bi-truck"></i> Status Pengiriman
+										</h5>
+									</div>
+									<div class="card-body">
+										<div class="mb-4">
+											<p class="text-muted mb-2">Status:</p>
+											<span
+												id="statusBadge"
+												class="badge bg-secondary fs-6"
+												>-</span
+											>
+										</div>
+
+										<p class="text-muted mb-2">Progress Pengiriman:</p>
+										<div
+											class="progress mb-4"
+											style="height: 30px">
+											<div
+												id="progressBar"
+												class="progress-bar bg-primary"
+												style="width: 0%">
+												<span class="fw-bold text-light">0%</span>
+											</div>
+										</div>
+
+										<div class="timeline mt-4">
+											<div
+												class="timeline-item"
+												id="timeline"></div>
+										</div>
+									</div>
+								</div>
+
+								<div class="card shadow-sm">
+									<div class="card-header bg-light border-bottom">
+										<h5 class="mb-0 text-secondary fw-bold">
+											<i class="bi bi-box-seam"></i> Detail Ekspedisi & Paket
+										</h5>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-md-6 mb-3">
+												<p class="mb-2">
+													<strong
+														><i class="bi bi-calendar-event"></i> Tanggal
+														Pengiriman:</strong
+													><br />
+													<span id="tanggalKirim">-</span>
+												</p>
+											</div>
+											<div class="col-md-6 mb-3">
+												<p class="mb-2">
+													<strong
+														><i class="bi bi-calendar-check"></i> Estimasi
+														Tiba:</strong
+													><br />
+													<span id="estimasiTiba">-</span>
+												</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 mb-3">
+												<p class="mb-2">
+													<strong
+														><i class="bi bi-truck"></i> Nama Ekspedisi:</strong
+													><br />
+													<span
+														id="namaEkspedisi"
+														class="fs-5 fw-bold text-primary"
+														>-</span
+													>
+												</p>
+											</div>
+											<div class="col-md-6 mb-3">
+												<p class="mb-2">
+													<strong
+														><i class="bi bi-barcode"></i> Nomor Resi:</strong
+													><br />
+													<span
+														id="nomorResi"
+														class="fs-5 font-monospace text-danger"
+														>-</span
+													>
+												</p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6 mb-3">
+												<p class="mb-2">
+													<strong><i class="bi bi-box"></i> Jenis Paket:</strong
+													><br />
+													<span id="jenisPaket">-</span>
+												</p>
+											</div>
+											<div class="col-md-6 mb-3">
+												<p class="mb-2">
+													<strong
+														><i class="bi bi-cash"></i> Total
+														Pembayaran:</strong
+													><br />
+													<span
+														id="totalBayaran"
+														class="fs-5 fw-bold text-success"
+														>-</span
+													>
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="d-grid gap-2 mt-4 mb-5">
+									<button
+										class="btn btn-outline-primary"
+										id="newSearchBtn">
+										<i class="bi bi-search"></i> Pencarian Baru
+									</button>
+									<a
+										href="dashboard.html"
+										class="btn btn-outline-secondary">
+										<i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div
+							id="emptyState"
+							class="row">
+							<div class="col-md-8 mx-auto text-center py-5">
+								<div style="font-size: 80px; color: #ccc; margin-bottom: 20px">
+									<i class="bi bi-inbox"></i>
+								</div>
+								<h3 class="text-muted mb-2">Belum Ada Pencarian</h3>
+								<p class="text-muted">
+									Masukkan nomor Delivery Order di atas untuk melacak paket anda
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="errorModal"
+			tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-danger bg-opacity-10">
+						<h5 class="modal-title text-danger">
+							<i class="bi bi-exclamation-circle"></i> Data Tidak Ditemukan
+						</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<p id="errorMessage">
+							Maaf, nomor Delivery Order yang anda masukkan tidak ditemukan
+							dalam sistem.
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-danger"
+							data-bs-dismiss="modal">
+							Tutup
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+		<script src="../utils/data.js"></script>
+		<script src="../utils/script.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				initializeTracking();
+			});
+
+			function initializeTracking() {
+				const userEmail = localStorage.getItem('userEmail');
+				if (!userEmail) {
+					window.location.href = 'index.html';
+					return;
+				}
+
+				document.getElementById('userName').textContent =
+					userEmail.split('@')[0];
+
+				// Setup event listeners
+				document
+					.getElementById('searchBtn')
+					.addEventListener('click', searchTracking);
+				document
+					.getElementById('doNumber')
+					.addEventListener('keypress', function (e) {
+						if (e.key === 'Enter') searchTracking();
+					});
+				document
+					.getElementById('newSearchBtn')
+					.addEventListener('click', resetSearch);
+				document
+					.getElementById('logoutBtn')
+					.addEventListener('click', function (e) {
+						e.preventDefault();
+						localStorage.removeItem('userEmail');
+						window.location.href = 'index.html';
+					});
+			}
+
+			function searchTracking() {
+				const doNumber = document
+					.getElementById('doNumber')
+					.value.trim()
+					.toUpperCase();
+
+				if (!doNumber) {
+					alert('Silakan masukkan nomor Delivery Order');
+					return;
+				}
+
+				if (dataTracking[doNumber]) {
+					displayTrackingResults(doNumber);
+				} else {
+					showErrorModal(
+						'Maaf, nomor DO "' +
+							doNumber +
+							'" tidak ditemukan. Coba dengan DO-001, DO-002, DO-003, atau DO-004',
+					);
+				}
+			}
+
+			function displayTrackingResults(doNumber) {
+				const data = dataTracking[doNumber];
+
+				document.getElementById('namaMahasiswa').textContent = data.nama;
+				document.getElementById('nimMahasiswa').textContent = '-';
+
+				const statusMap = {
+					'Dalam Perjalanan': 'warning',
+					Dikirim: 'success',
+					Pending: 'secondary',
+					Terkirim: 'success',
+				};
+				const statusColor = statusMap[data.status] || 'secondary';
+
+				document.getElementById('statusBadge').className =
+					`badge bg-${statusColor} fs-6`;
+				document.getElementById('statusBadge').textContent = data.status;
+
+				// Calculate progress based on journey events
+				const progressPercent = Math.min(
+					100,
+					(data.perjalanan.length / 6) * 100,
+				);
+				const progressBar = document.getElementById('progressBar');
+				progressBar.style.width = progressPercent + '%';
+				progressBar.textContent = Math.round(progressPercent) + '%';
+				progressBar.className = 'progress-bar bg-primary';
+
+				document.getElementById('tanggalKirim').textContent = data.tanggalKirim;
+				document.getElementById('estimasiTiba').textContent = '-';
+				document.getElementById('namaEkspedisi').textContent = data.ekspedisi;
+				document.getElementById('nomorResi').textContent = data.nomorDO;
+				document.getElementById('jenisPaket').textContent = data.paket;
+				document.getElementById('totalBayaran').textContent = data.total;
+
+				generateTimeline(data);
+
+				document.getElementById('resultsContainer').style.display = 'block';
+				document.getElementById('emptyState').style.display = 'none';
+			}
+
+			function generateTimeline(data) {
+				// Use actual journey events from perjalanan array
+				const perjalanan = data.perjalanan || [];
+				let timelineHtml = '';
+
+				perjalanan.forEach((event, index) => {
+					timelineHtml += `
+                    <div class="timeline-step mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0 me-3">
+                                <i class="bi bi-check-circle text-primary fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1">
+                                <p class="mb-0 fw-bold">${event.waktu}</p>
+                                <p class="mb-0 text-muted small">${event.keterangan}</p>
+                            </div>
+                        </div>
+                        ${index < perjalanan.length - 1 ? '<div class="ms-2 ps-3 border-start" style="height: 30px;"></div>' : ''}
+                    </div>
+                `;
+				});
+
+				if (perjalanan.length === 0) {
+					timelineHtml =
+						'<p class="text-muted">Belum ada riwayat pengiriman</p>';
+				}
+
+				document.getElementById('timeline').innerHTML = timelineHtml;
+			}
+
+			function resetSearch() {
+				document.getElementById('doNumber').value = '';
+				document.getElementById('resultsContainer').style.display = 'none';
+				document.getElementById('emptyState').style.display = 'block';
+				document.getElementById('doNumber').focus();
+			}
+
+			function showErrorModal(message) {
+				document.getElementById('errorMessage').textContent = message;
+				const modal = new bootstrap.Modal(
+					document.getElementById('errorModal'),
+				);
+				modal.show();
+			}
+		</script>
+	</body>
+</html>

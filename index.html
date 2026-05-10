@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Login - Pemesanan Bahan Ajar UT</title>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<link
+			rel="stylesheet"
+			href="../assets/styles/style.css" />
+	</head>
+	<body class="login-bg">
+		<div
+			class="container-fluid h-100 d-flex align-items-center justify-content-center">
+			<div class="row w-100">
+				<div class="col-md-6 col-lg-4 mx-auto">
+					<div class="card shadow-lg login-card">
+						<div class="card-body p-5">
+							<div class="text-center mb-4">
+								<h2 class="card-title text-primary fw-bold">
+									Dashboard Aplikasi SITTA
+								</h2>
+								<p class="text-muted">Pemesanan Bahan Ajar</p>
+							</div>
+
+							<div
+								class="alert alert-info mt-4"
+								role="alert">
+								<h6 class="alert-heading fw-bold">Akun Demo:</h6>
+								<small>
+									Email: <code>rina@ut.ac.id</code><br />
+									Password: <code>rina123</code>
+								</small>
+							</div>
+
+							<form id="loginForm">
+								<div class="mb-3">
+									<label
+										for="email"
+										class="form-label"
+										>Email</label
+									>
+									<input
+										type="email"
+										class="form-control form-control-lg"
+										id="email"
+										placeholder="Masukkan email anda"
+										required />
+								</div>
+
+								<div class="mb-3">
+									<label
+										for="password"
+										class="form-label"
+										>Password</label
+									>
+									<input
+										type="password"
+										class="form-control form-control-lg"
+										id="password"
+										placeholder="Masukkan password anda"
+										required />
+								</div>
+
+								<div class="d-flex justify-content-end mb-3">
+									<button
+										type="button"
+										class="btn btn-sm btn-outline-warning p-2"
+										data-bs-toggle="modal"
+										data-bs-target="#forgotPasswordModal">
+										Lupa Password
+									</button>
+								</div>
+
+								<button
+									type="submit"
+									class="btn btn-primary btn-lg w-100 fw-bold mb-3">
+									Login
+								</button>
+							</form>
+
+							<div class="d-grid gap-2">
+								<button
+									type="button"
+									class="btn btn-outline-success btn-sm p-2"
+									data-bs-toggle="modal"
+									data-bs-target="#registerModal">
+									Daftar Akun Baru
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="forgotPasswordModal"
+			tabindex="-1"
+			aria-labelledby="forgotPasswordLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-warning bg-opacity-10">
+						<h5
+							class="modal-title"
+							id="forgotPasswordLabel">
+							Lupa Password
+						</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>Masukkan email anda untuk menerima link reset password</p>
+						<input
+							type="email"
+							class="form-control"
+							id="forgotEmail"
+							placeholder="Masukkan email anda" />
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-bs-dismiss="modal">
+							Tutup
+						</button>
+						<button
+							type="button"
+							class="btn btn-warning"
+							id="forgotPasswordBtn">
+							Kirim Link Reset
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="modal fade"
+			id="registerModal"
+			tabindex="-1"
+			aria-labelledby="registerLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header bg-success bg-opacity-10">
+						<h5
+							class="modal-title"
+							id="registerLabel">
+							Daftar Akun Baru
+						</h5>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="registerForm">
+							<div class="mb-3">
+								<label
+									for="registerNIM"
+									class="form-label"
+									>NIM</label
+								>
+								<input
+									type="text"
+									class="form-control"
+									id="registerNIM"
+									placeholder="Masukkan NIM anda"
+									required />
+							</div>
+							<div class="mb-3">
+								<label
+									for="registerName"
+									class="form-label"
+									>Nama Lengkap</label
+								>
+								<input
+									type="text"
+									class="form-control"
+									id="registerName"
+									placeholder="Masukkan nama lengkap"
+									required />
+							</div>
+							<div class="mb-3">
+								<label
+									for="registerEmail"
+									class="form-label"
+									>Email</label
+								>
+								<input
+									type="email"
+									class="form-control"
+									id="registerEmail"
+									placeholder="Masukkan email anda"
+									required />
+							</div>
+							<div class="mb-3">
+								<label
+									for="registerPassword"
+									class="form-label"
+									>Password</label
+								>
+								<input
+									type="password"
+									class="form-control"
+									id="registerPassword"
+									placeholder="Masukkan password"
+									required />
+							</div>
+							<div class="mb-3">
+								<label
+									for="registerConfirmPassword"
+									class="form-label"
+									>Konfirmasi Password</label
+								>
+								<input
+									type="password"
+									class="form-control"
+									id="registerConfirmPassword"
+									placeholder="Konfirmasi password"
+									required />
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-bs-dismiss="modal">
+							Tutup
+						</button>
+						<button
+							type="button"
+							class="btn btn-success"
+							id="registerBtn">
+							Daftar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+		<script src="./utils/data.js"></script>
+		<script src="./utils/script.js"></script>
+	</body>
+</html>
